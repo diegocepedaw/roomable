@@ -1,0 +1,14 @@
+matrix:
+  include:
+    - language: python
+      python: 3.6
+      before_install:
+        - cd backend
+      script:
+        - nosetests
+    - language: node_js
+      node_js: node
+      before_install:
+        - cd frontend
+      script:
+        - yarn test
