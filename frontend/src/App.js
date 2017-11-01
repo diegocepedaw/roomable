@@ -9,16 +9,18 @@ import {
 } from 'react-router-dom';
 
 import Login from './Login';
+import Register from './Register';
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <Grid>
-                    <Router>
+                <Router>
+                    <Grid>
                         <Route exact path="/" component={Login}/>
-                    </Router>
-                </Grid>
+                        <Route exact path="/register" component={Register}/>
+                    </Grid>
+                </Router>
             </div>
         );
     }
