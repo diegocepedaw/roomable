@@ -34,7 +34,7 @@ class Matches extends Component {
 
         return (
             <div className="Matches">
-                <Col xs={8} xsOffset={2}>
+                <Col md={8} mdOffset={2}>
                     <PageHeader>Matches</PageHeader>
                     {noneMsg}
                     <ListGroup>
