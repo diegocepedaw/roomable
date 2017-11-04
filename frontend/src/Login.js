@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import { Col, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Col, Form, FormGroup, FormControl, Button, PageHeader } from 'react-bootstrap';
 
 class Login extends Component {
     render() {
         return (
             <div className="Login">
-                <Col xs={4} xsOffset={4}>
+                <Col sm={6} smOffset={3} md={4} mdOffset={4}>
                     <Form>
-                        <h2>Please sign in</h2>
+                        <PageHeader>Please sign in</PageHeader>
                         <FormGroup controlId="formValidationSuccess1">
                             <FormControl type="email" placeholder="Email" />
                         </FormGroup>
