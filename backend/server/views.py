@@ -12,17 +12,18 @@ from collections import OrderedDict
 # Create your views here.
 def index(request):
 
-    compUser = "user1"
+    targetemail = 'adam'
+    compUser = User.objects.get(email=targetemail)
     userlist = User.objects.all()
 
     matchesjson = []
     # loop through and calculate matc percentage
     # Build response json
     for user in userlist:
-        if (str(user.email) == compUser):
+        if (user.email == compUser.email):
             continue
 
-        # calculate match percentage
+        # calculate
 
 
         #serialize query results
@@ -30,7 +31,14 @@ def index(request):
         pref = json.loads(serializers.serialize('json', Preferences.objects.filter(email=user.email)))
         usr  = json.loads(serializers.serialize('json', User.objects.filter(email=user.email)))
 
+
+
         data = OrderedDict([('email',usr[0]['fields']['email']), ('handle',usr[0]['fields']['handle']),('description',usr[0]['fields']['description']), ('attributes',attr[0]['fields']), ('preferences',pref[0]['fields'])])
+
+        for key, value in data.items():
+            if key == 'email':
+                continue
+            print value
 
         matchesjson.append(data)
 

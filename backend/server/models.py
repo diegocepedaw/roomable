@@ -6,14 +6,14 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
-    email =  models.ForeignKey('auth.User')
+    email =  models.CharField(max_length=100, unique=True)
     handle = models.CharField(max_length=200)
     description = models.TextField()
 
 
 
 class Attributes(models.Model):
-    email = models.ForeignKey('auth.User')
+    email =  models.CharField(max_length=100, unique=True)
     gender = models.CharField(max_length=1, default='M')
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
@@ -32,7 +32,7 @@ class Attributes(models.Model):
     tv = models.BooleanField(default=False)
 
 class Preferences(models.Model):
-    email = models.ForeignKey('auth.User')
+    email =  models.CharField(max_length=100, unique=True)
     gender = models.CharField(max_length=1, default='M')
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
