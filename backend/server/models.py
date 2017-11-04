@@ -37,6 +37,9 @@ class Attributes(models.Model):
     shower = models.BooleanField(default=False)
     tv = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.email
+
 class Preferences(models.Model):
     usr = models.ForeignKey('server.User')
     email =  models.CharField(max_length=100, unique=True)
@@ -57,8 +60,37 @@ class Preferences(models.Model):
     shower = models.BooleanField(default=False)
     tv = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.email
+
+class Dealbreakers(models.Model):
+    usr = models.ForeignKey('server.User')
+    email =  models.CharField(max_length=100, unique=True)
+    gender = models.BooleanField(default=False)
+    pet = models.BooleanField(default=False)
+    smoke = models.BooleanField(default=False)
+    sleep_late = models.BooleanField(default=False)
+    rise_early = models.BooleanField(default=False)
+    neat = models.BooleanField(default=False)
+    friends = models.BooleanField(default=False)
+    music = models.BooleanField(default=False)
+    language = models.BooleanField(default=False)
+    budget= models.BooleanField(default=False)
+    dishes = models.BooleanField(default=False)
+    skimpy = models.BooleanField(default=False)
+    drink = models.BooleanField(default=False)
+    drugs = models.BooleanField(default=False)
+    shower = models.BooleanField(default=False)
+    tv = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
+
 class Location(models.Model):
     usr = models.ForeignKey('server.User')
     email =  models.CharField(max_length=100, unique=True)
     radius = models.IntegerField(default=0)
     position = GeopositionField()
+
+    def __str__(self):
+        return self.email

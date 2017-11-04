@@ -8,6 +8,7 @@ from .models import *
 admin.site.register(User)
 admin.site.register(Attributes)
 admin.site.register(Preferences)
+admin.site.register(Dealbreakers)
 
 
 class LocationAdmin(admin.ModelAdmin):
