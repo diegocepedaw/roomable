@@ -1,0 +1,12 @@
+div {
+    margin-top: .1cm;
+}
+body {
+    background-image: url("./images/subtle-pattern-6.jpg");
+}
+.jumbotron {
+    background-color:#e1ebf5 !important;
+}
+hr {
+  border-top: 3px solid #b5cfe8 !important;
+}

@@ -11,6 +11,7 @@ import {
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import Profile from './Profile';
 
 class App extends Component {
     render() {
@@ -21,6 +22,7 @@ class App extends Component {
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>
+                        <Route exact path="/profile" component={Profile}/>
                     </Grid>
                 </Router>
             </div>
