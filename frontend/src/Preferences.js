@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import 'font-awesome/css/font-awesome.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
 

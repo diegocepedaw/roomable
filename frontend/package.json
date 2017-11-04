@@ -10,6 +10,7 @@
     "redux-devtools": "^3.4.0"
   },
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.0.0",
