@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyBbPZ2F5ee5RDlx5taaJN8BeLvLp736FQM'
+
 
 # Application definition
 
@@ -37,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'rest_framework',
+    'geoposition',
     'server'
 ]
 
