@@ -11,36 +11,47 @@ class Preferences extends Component {
                     <Jumbotron>
                         <h1><i class="fa fa-tasks" aria-hidden="true"></i> Preferences</h1>
                         <hr />
+                        <p><em>Profile Information</em></p>
+                        <p>Fill out information to be shown on your profile</p>
+                        <hr />
+                        <p>What is your name?</p>
+                        <div class="form-group">
+                          <textarea class="form-control" id="Textarea1" rows="1"></textarea>
+                        </div>
+                        <p>Describe yourself</p>
+                        <div class="form-group">
+                          <textarea class="form-control" id="Textarea2" rows="3"></textarea>
+                        </div>
+                        <hr />
                         <p><em>Basic Information</em></p>
-                        <p>For this section just fill out your information</p>
                         <hr />
                         <p>What gender are you?</p>
                         <label class="radio-inline"><input type="radio" name="optradio" />Male</label>
                         <label class="radio-inline"><input type="radio" name="optradio" />Female</label>
                         <p></p>
                         <p>Do you smoke?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio1" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio1" />No</label>
                         <p></p>
                         <p>Do you go to bed late?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio2" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio2" />No</label>
                         <p></p>
                         <p>Do you wake up very early?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio3" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio3" />No</label>
                         <p></p>
                         <p>Are you very neat?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio4" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio4" />No</label>
                         <p></p>
                         <p>Do you have friends over often?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio5" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio5" />No</label>
                         <p></p>
                         <p>Do you play music loudly often?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio6" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio6" />No</label>
                         <p></p>
                         <p>What’s your primary language?</p>
                         <div class="form-group">
@@ -52,112 +63,112 @@ class Preferences extends Component {
                               <option>Japanese</option>
                             </select>
                           </div>
-                        <p>What is your budget for rent?</p>
+                        <p>What is your monthly budget for rent (in dollars)?</p>
                         <div class="form-group">
-                          <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
+                          <textarea class="form-control" id="Textarea3" rows="1"></textarea>
                         </div>
                         <p>Do you do the dishes promptly after eating?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio7" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio7" />No</label>
                         <p></p>
                         <p>Do you like to be naked or barely dressed in your apartment?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio8" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio8" />No</label>
                         <p></p>
                         <p>Do you drink?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio9" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio9" />No</label>
                         <p></p>
                         <p>Do you do drugs?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio10" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio10" />No</label>
                         <p></p>
                         <p>Do you shower often?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio11" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio11" />No</label>
                         <p></p>
                         <p>Do you watch TV?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio12" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio12" />No</label>
                         <p></p>
                         <hr />
                         <p><em>Preferences</em></p>
                         <p>The dealbreaker option is for things that you care about so much, any user with a different answer will not be matched with you automatically. If you select a lot of dealbreakers you may find yourself without any matches!</p>
                         <hr />
                         <p>Do you care about the gender of your roommate?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio13" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio13" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio13" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you mind having pets in your apartment?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio14" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio14" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio14" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you mind smoking in your apartment?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio15" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio15" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio15" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate goes to bed very late?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio16" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio16" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio16" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate goes to bed very early?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio17" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio17" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio17" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care how neat your roommates are?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio18" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio18" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio18" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommates invite friends over?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio19" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio19" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio19" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommates play music loudly?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio20" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio20" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio20" />Dealbreaker!</label>
                         <p></p>
                         <p>Does your roommate have to speak the same primary language?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio21" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio21" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio21" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care about how fast your roommate washes the dishes after eating?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio22" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio22" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio22" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care about what your roommates wear in the apartment?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio23" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio23" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio23" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate drinks?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio24" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio24" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio24" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate does drugs?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio25" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio25" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio25" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care how often your roommate showers?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio26" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio26" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio26" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate watches TV?</p>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Yes</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" />Dealbreaker!</label>
+                        <label class="radio-inline"><input type="radio" name="optradio27" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio27" />No</label>
+                        <label class="radio-inline"><input type="radio" name="optradio27" />Dealbreaker!</label>
                         <p></p>
                         <Button type="submit">
                             Submit
