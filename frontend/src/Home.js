@@ -6,7 +6,7 @@ class Home extends Component {
     render() {
         return (
             <div className="Login">
-                <Col xs={4} xsOffset={4}>
+                <Col sm={6} smOffset={3} md={4} mdOffset={4}>
                     <h1>Roomable</h1>
                     <h3>Leave no room for doubt</h3>
                     <ButtonGroup vertical block>
