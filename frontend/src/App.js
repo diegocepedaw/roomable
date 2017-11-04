@@ -14,6 +14,7 @@ import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
 import Preferences from './Preferences';
+import otherProfile from './otherProfile';
 import Matches from './Matches';
 import NotFound from './NotFound';
 
@@ -35,6 +36,7 @@ class App extends Component {
                             <Route exact path="/matches" render={(props) => (
                                 <Matches {...props} matches={sample_matches} />
                             )}/>
+                            <Route exact path="/otherProfile" component={otherProfile}/>
                             <Route component={NotFound} />
                         </Switch>
                     </Grid>

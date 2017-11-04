@@ -98,77 +98,92 @@ class Preferences extends Component {
                         <p>Do you care about the gender of your roommate?</p>
                         <label class="radio-inline"><input type="radio" name="optradio13" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio13" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio13" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox13" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you mind having pets in your apartment?</p>
                         <label class="radio-inline"><input type="radio" name="optradio14" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio14" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio14" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox14" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you mind smoking in your apartment?</p>
                         <label class="radio-inline"><input type="radio" name="optradio15" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio15" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio15" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox15" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate goes to bed very late?</p>
                         <label class="radio-inline"><input type="radio" name="optradio16" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio16" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio16" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox16" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate goes to bed very early?</p>
                         <label class="radio-inline"><input type="radio" name="optradio17" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio17" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio17" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox17" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care how neat your roommates are?</p>
                         <label class="radio-inline"><input type="radio" name="optradio18" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio18" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio18" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox18" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommates invite friends over?</p>
                         <label class="radio-inline"><input type="radio" name="optradio19" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio19" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio19" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox19" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommates play music loudly?</p>
                         <label class="radio-inline"><input type="radio" name="optradio20" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio20" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio20" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox20" />Dealbreaker!</label>
                         <p></p>
                         <p>Does your roommate have to speak the same primary language?</p>
                         <label class="radio-inline"><input type="radio" name="optradio21" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio21" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio21" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox21" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care about how fast your roommate washes the dishes after eating?</p>
                         <label class="radio-inline"><input type="radio" name="optradio22" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio22" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio22" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox22" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care about what your roommates wear in the apartment?</p>
                         <label class="radio-inline"><input type="radio" name="optradio23" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio23" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio23" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox23" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate drinks?</p>
                         <label class="radio-inline"><input type="radio" name="optradio24" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio24" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio24" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox24" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate does drugs?</p>
                         <label class="radio-inline"><input type="radio" name="optradio25" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio25" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio25" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox25" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care how often your roommate showers?</p>
                         <label class="radio-inline"><input type="radio" name="optradio26" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio26" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio26" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox26" />Dealbreaker!</label>
                         <p></p>
                         <p>Do you care if your roommate watches TV?</p>
                         <label class="radio-inline"><input type="radio" name="optradio27" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio27" />No</label>
-                        <label class="radio-inline"><input type="radio" name="optradio27" />Dealbreaker!</label>
+                        <p></p>
+                        <label class="checkbox-inline"><input type="checkbox" name="checkbox27" />Dealbreaker!</label>
                         <p></p>
                         <Button type="submit">
                             Submit
