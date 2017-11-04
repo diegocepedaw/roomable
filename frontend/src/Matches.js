@@ -7,7 +7,7 @@ import './Matches.css';
 class ListItem extends Component {
     render() {
         return (
-            <ListGroupItem className="ListItem">
+            <ListGroupItem className="ListItem" href={`/user/${this.props.matchName}`}>
                 <div className="ListItemName"><b>{this.props.matchName}</b></div>
                 <div className="ListItemPct">{Math.round(this.props.matchPct)}% Match</div>
                 <div className="ListItemDesc text-muted">{this.props.matchDesc}</div>
