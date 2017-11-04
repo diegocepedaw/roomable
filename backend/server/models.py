@@ -33,7 +33,6 @@ class Attributes(models.Model):
 
 class Preferences(models.Model):
     email = models.ForeignKey('auth.User')
-    models.ForeignKey('auth.User')
     gender = models.CharField(max_length=1, default='M')
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
