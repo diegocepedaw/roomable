@@ -5,6 +5,9 @@ import {
     USER_REQUEST,
     USER_SUCCESS,
     USER_ERROR,
+    MATCHES_REQUEST,
+    MATCHES_SUCCESS,
+    MATCHES_ERROR
 } from './actions';
 
 const initialToken = {
@@ -18,7 +21,13 @@ const initialUser = {
     error: false,
 };
 
-export function token(state = initialToken, action) {
+const initialMatches = {
+    data: [],
+    loading: false,
+    error: false,
+};
+
+function token(state = initialToken, action) {
     switch (action.type) {
         case GET_TOKEN: {
             return {
@@ -32,7 +41,7 @@ export function token(state = initialToken, action) {
     }
 }
 
-export function user(state = initialUser, action) {
+function user(state = initialUser, action) {
     switch (action.type) {
         case USER_REQUEST: {
             return {
@@ -63,9 +72,40 @@ export function user(state = initialUser, action) {
     }
 }
 
+function matches(state = initialMatches, action) {
+    switch (action.type) {
+        case MATCHES_REQUEST: {
+            return {
+                ...state,
+                data: [],
+                loading: true,
+                error: false
+            };
+        }
+        case MATCHES_SUCCESS: {
+            return {
+                ...state,
+                data: action.data,
+                loading: false,
+                error: false
+            };
+        }
+        case MATCHES_ERROR: {
+            return {
+                ...state,
+                loading: false,
+                error: true
+            };
+        }
+        default:
+            return state;
+    }
+}
+
 const roomableApp = combineReducers({
     token,
-    user
+    user,
+    matches
 });
 
 export default roomableApp;

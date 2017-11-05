@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { matchesRequest, matchesSuccess, matchesError } from './actions';
 
 import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
@@ -25,11 +27,15 @@ class NoMatchesMsg extends Component {
 }
 
 class Matches extends Component {
-    render() {
-        const noneMsg = this.props.matches.userlist.length === 0 ? <NoMatchesMsg /> : null;
+    componentDidMount() {
+        this.props.dataFetch(this.props.email);
+    }
 
-        const listItems = this.props.matches.userlist.map((val) => (
-            <ListItem matchName={val.handle} matchPct={val.match} matchDesc={val.description} />
+    render() {
+        const noneMsg = this.props.matches.length === 0 ? <NoMatchesMsg /> : null;
+
+        const listItems = this.props.matches.map((val, ind) => (
+            <ListItem matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
         ));
 
         return (
@@ -46,4 +52,43 @@ class Matches extends Component {
     }
 }
 
-export default Matches;
+const mapStateToProps = state => {
+    return {
+        matches: state.matches.data,
+        loading: state.matches.loading,
+        email: state.token.email,
+        error: state.matches.error,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        dataFetch: (email) => {
+            dispatch(matchesRequest());
+            fetch(`/server/api/getmatches/${email}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Bad response code');
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(json => {
+                    const sorted = json.userlist.sort((a, b) => {
+                        return b.match - a.match;
+                    });
+                    dispatch(matchesSuccess(sorted));
+                })
+                .catch(() => {
+                    dispatch(matchesError());
+                });
+        }
+    };
+};
+
+export { Matches };
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Matches);

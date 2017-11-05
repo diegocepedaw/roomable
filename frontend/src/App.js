@@ -34,9 +34,9 @@ class App extends Component {
                             <Route exact path="/profile" component={Profile}/>
                             <Route exact path="/preferences" component={Preferences}/>
                             <Route exact path="/matches" render={(props) => (
-                                <Matches {...props} matches={sample_matches} />
+                                <Matches {...props} />
                             )}/>
-                            <Route exact path="/otherProfile" component={otherProfile}/>
+                            <Route exact path="/user/:email" component={otherProfile}/>
                             <Route component={NotFound} />
                         </Switch>
                     </Grid>
