@@ -29,6 +29,10 @@ class Preferences extends Component {
                         <label class="radio-inline"><input type="radio" name="optradio" />Male</label>
                         <label class="radio-inline"><input type="radio" name="optradio" />Female</label>
                         <p></p>
+                        <p>Do you own a pet?</p>
+                        <label class="radio-inline"><input type="radio" name="optradio1" />Yes</label>
+                        <label class="radio-inline"><input type="radio" name="optradio1" />No</label>
+                        <p></p>
                         <p>Do you smoke?</p>
                         <label class="radio-inline"><input type="radio" name="optradio1" />Yes</label>
                         <label class="radio-inline"><input type="radio" name="optradio1" />No</label>
