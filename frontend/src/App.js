@@ -18,11 +18,8 @@ import otherProfile from './otherProfile';
 import Matches from './Matches';
 import NotFound from './NotFound';
 
-import sample_matches from './sample_matches';
-
 class App extends Component {
     render() {
-        // sample_matches.userlist = [];
         return (
             <div className="App">
                 <Router>

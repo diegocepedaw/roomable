@@ -9,7 +9,7 @@ import './Matches.css';
 class ListItem extends Component {
     render() {
         return (
-            <ListGroupItem className="ListItem" href={`/user/${this.props.matchName}`}>
+            <ListGroupItem className="ListItem" href={`/user/${this.props.matchEmail}`}>
                 <div className="ListItemName"><b>{this.props.matchName}</b></div>
                 <div className="ListItemPct">{Math.round(this.props.matchPct)}% Match</div>
                 <div className="ListItemDesc text-muted">{this.props.matchDesc}</div>
@@ -35,7 +35,7 @@ class Matches extends Component {
         const noneMsg = this.props.matches.length === 0 ? <NoMatchesMsg /> : null;
 
         const listItems = this.props.matches.map((val, ind) => (
-            <ListItem matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
+            <ListItem matchEmail={val.email} matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
         ));
 
         return (
