@@ -5,7 +5,7 @@ import './Profile.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
 
-class otherProfile extends Component {
+class OtherProfile extends Component {
     componentDidMount() {
         this.props.dataFetch(this.props.match.params.email);
     }
@@ -205,6 +205,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(otherProfile);
+)(OtherProfile);
 
-export { otherProfile };
+export { OtherProfile };
