@@ -148,15 +148,17 @@ def registeruser(request):
     # ensure the email isn't already registered
     if AuthUser.objects.filter(
             email=request.POST['email']).first() is not None:
-        return HttpResponse(status=404)
+        response = {'response': 'false'}
+    else:
+        # create the user with the username=email, email=None, and
+        # password=password
+        AuthUser.objects.create_user(
+            request.POST['email'],
+            None,
+            request.POST['password'])
 
-    # create the user with the username=email, email=None, and
-    # password=password
-    AuthUser.objects.create_user(
-        request.POST['email'],
-        None,
-        request.POST['password'])
-    return render(request, 'REGISTRATION_PAGE_NAME')
+        response = {'response': 'true', 'email': request.POST['email']}
+    return JsonResponse(response)
 
 
 def loginuser(request):
@@ -169,13 +171,13 @@ def loginuser(request):
     if user is not None:
         login(request, user)
         # A backend authenticated the credentials
-        authResponse = {
+        response = {
             'authenticated': 'true',
             'email': request.POST['email']}
     else:
         # No backend authenticated the credentials
-        authResponse = {'authenticated': 'false'}
-    return JsonResponse(authResponse)
+        response = {'authenticated': 'false'}
+    return JsonResponse(response)
 
 # updates the user's handle, description, preferences, attributes, and
 # dealbreakers
