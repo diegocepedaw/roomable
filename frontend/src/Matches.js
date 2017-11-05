@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { matchesRequest, matchesSuccess, matchesError } from './actions';
 
 import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
@@ -27,14 +26,59 @@ class NoMatchesMsg extends Component {
 }
 
 class Matches extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            matches: [],
+            loading: false,
+            error: false,
+        };
+    }
+
+    dataFetch(email) {
+        this.setState({
+            matches: [],
+            loading: true,
+            error: false
+        });
+
+        fetch(`/server/api/getmatches/${email}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Bad response code');
+                } else {
+                    return response.json();
+                }
+            })
+            .then(json => {
+                const sorted = json.userlist.sort((a, b) => {
+                    return b.match - a.match;
+                });
+
+                this.setState({
+                    matches: sorted,
+                    loading: false,
+                    error: false
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    matches: [],
+                    loading: false,
+                    error: true
+                });
+            });
+    }
+
     componentDidMount() {
-        this.props.dataFetch(this.props.email);
+        this.dataFetch(this.props.email);
     }
 
     render() {
-        const noneMsg = this.props.matches.length === 0 ? <NoMatchesMsg /> : null;
+        const noneMsg = this.state.matches.length === 0 ? <NoMatchesMsg /> : null;
 
-        const listItems = this.props.matches.map((val, ind) => (
+        const listItems = this.state.matches.map((val, ind) => (
             <ListItem matchEmail={val.email} matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
         ));
 
@@ -54,41 +98,12 @@ class Matches extends Component {
 
 const mapStateToProps = state => {
     return {
-        matches: state.matches.data,
-        loading: state.matches.loading,
         email: state.token.email,
-        error: state.matches.error,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        dataFetch: (email) => {
-            dispatch(matchesRequest());
-            fetch(`/server/api/getmatches/${email}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Bad response code');
-                    } else {
-                        return response.json();
-                    }
-                })
-                .then(json => {
-                    const sorted = json.userlist.sort((a, b) => {
-                        return b.match - a.match;
-                    });
-                    dispatch(matchesSuccess(sorted));
-                })
-                .catch(() => {
-                    dispatch(matchesError());
-                });
-        }
     };
 };
 
 export { Matches };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(Matches);

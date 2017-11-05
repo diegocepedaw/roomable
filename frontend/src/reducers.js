@@ -5,9 +5,6 @@ import {
     USER_REQUEST,
     USER_SUCCESS,
     USER_ERROR,
-    MATCHES_REQUEST,
-    MATCHES_SUCCESS,
-    MATCHES_ERROR,
     OTHER_REQUEST,
     OTHER_SUCCESS,
     OTHER_ERROR
@@ -20,12 +17,6 @@ const initialToken = {
 
 const initialUser = {
     data: null,
-    loading: false,
-    error: false,
-};
-
-const initialMatches = {
-    data: [],
     loading: false,
     error: false,
 };
@@ -75,36 +66,6 @@ function user(state = initialUser, action) {
     }
 }
 
-function matches(state = initialMatches, action) {
-    switch (action.type) {
-        case MATCHES_REQUEST: {
-            return {
-                ...state,
-                data: [],
-                loading: true,
-                error: false
-            };
-        }
-        case MATCHES_SUCCESS: {
-            return {
-                ...state,
-                data: action.data,
-                loading: false,
-                error: false
-            };
-        }
-        case MATCHES_ERROR: {
-            return {
-                ...state,
-                loading: false,
-                error: true
-            };
-        }
-        default:
-            return state;
-    }
-}
-
 function otherUser(state = initialUser, action) {
     switch (action.type) {
         case OTHER_REQUEST: {
@@ -139,7 +100,6 @@ function otherUser(state = initialUser, action) {
 const roomableApp = combineReducers({
     token,
     user,
-    matches,
     otherUser
 });
 

@@ -36,25 +36,6 @@ export function userError() {
     };
 }
 
-export function matchesRequest() {
-    return {
-        type: MATCHES_REQUEST
-    };
-}
-
-export function matchesSuccess(data) {
-    return {
-        type: MATCHES_SUCCESS,
-        data
-    };
-}
-
-export function matchesError() {
-    return {
-        type: MATCHES_ERROR
-    };
-}
-
 export function otherRequest() {
     return {
         type: OTHER_REQUEST
