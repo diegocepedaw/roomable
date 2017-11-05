@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Matches from './Matches';
+import {Matches} from './Matches';
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
-    const matches = {
-        userlist: []
+    const props = {
+        matches: [],
+        dataFetch: () => {}
     };
-    ReactDOM.render(<Matches matches={matches} />, div);
+    ReactDOM.render(<Matches {...props} />, div);
 });
