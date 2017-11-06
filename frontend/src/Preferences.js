@@ -9,7 +9,7 @@ class Preferences extends Component {
             <div className="Preferences">
                 <Col xs={10} xsOffset={1}>
                     <Jumbotron>
-                    <form action="http://foo.com" method="post">
+                        <form action="http://127.0.0.1:8000/server/api/updateuserinfo" method="post">
                         <h1><i class="fa fa-tasks" aria-hidden="true"></i> Preferences</h1>
                         <hr />
                         <p><em>Profile Information</em></p>
@@ -197,10 +197,12 @@ class Preferences extends Component {
                         <p></p>
                         <label class="checkbox-inline"><input type="checkbox" name="db_tv" />Dealbreaker!</label>
                         <p></p>
+                        <a href="/profile">
                         <Button type="submit">
                             Submit
                         </Button>
-                    </form>
+                        </a>
+                        </form>
                     </Jumbotron>
 
                 </Col>

@@ -10,6 +10,7 @@ from collections import OrderedDict
 # from django.http import HttpResponse
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -184,6 +185,7 @@ def loginuser(request):
 
 # updates the user's handle, description, preferences, attributes, and
 # dealbreakers
+@csrf_exempt  # ADDED BECAUSE CSRF ERROR THROWN WITH EXTERNAL POST REQUESTS
 def updateuserinfo(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
@@ -316,5 +318,10 @@ def updateuserinfo(request):
     else:
         # anonymous users shouldn't be able to access this
         response = 'User not logged in.'
+    print("test")
 
-    return JsonResponse({'response': response})
+    response = HttpResponse("", status=302)
+    response['Location'] = 'localhost:3000/profile'
+    return response
+
+    # return JsonResponse({'response': response})
