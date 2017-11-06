@@ -197,9 +197,14 @@ class Preferences extends Component {
                         <p></p>
                         <label class="checkbox-inline"><input type="checkbox" name="db_tv" />Dealbreaker!</label>
                         <p></p>
-                        <a href="/profile">
+
                         <Button type="submit">
                             Submit
+                        </Button>
+
+                        <a href="/profile">
+                        <Button>
+                            Return to Profile
                         </Button>
                         </a>
                         </form>
