@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Redirect } from 'react-router';
+
 import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import './Matches.css';
@@ -72,10 +74,17 @@ class Matches extends Component {
     }
 
     componentDidMount() {
+        if (!this.props.authenticated) return;
         this.dataFetch(this.props.email);
     }
 
     render() {
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
+
         const noneMsg = this.state.matches.length === 0 ? <NoMatchesMsg /> : null;
 
         const listItems = this.state.matches.map((val, ind) => (
@@ -100,6 +109,7 @@ const mapStateToProps = state => {
     console.log(state);
     return {
         email: state.auth.email,
+        authenticated: state.auth.authenticated,
     };
 };
 

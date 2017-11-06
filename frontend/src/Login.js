@@ -16,7 +16,9 @@ class Login extends Component {
         };
     }
 
-    async onSubmit() {
+    async onSubmit(e) {
+        e.preventDefault();
+
         this.setState({
             submitted: true,
         });
@@ -55,7 +57,7 @@ class Login extends Component {
         return (
             <div className="Login">
                 <Col sm={6} smOffset={3} md={4} mdOffset={4}>
-                    <Form>
+                    <Form onSubmit={(e) => this.onSubmit(e)}>
                         <PageHeader>Please sign in</PageHeader>
                         <FormGroup controlId="formValidationSuccess1">
                             <FormControl
@@ -76,7 +78,7 @@ class Login extends Component {
                         <Button
                             disabled={this.state.submitted}
                             bsStyle="primary"
-                            onClick={() => this.onSubmit()}
+                            type="submit"
                         >
                             Submit
                         </Button>

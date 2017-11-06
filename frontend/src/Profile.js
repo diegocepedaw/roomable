@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import './Profile.css';
 
 
@@ -18,6 +19,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        if (!this.props.authenticated) return;
         this.dataFetch(this.props.email);
     }
 
@@ -52,6 +54,12 @@ class Profile extends Component {
     }
 
     render() {
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
+
         if (this.state.error) {
             return (
                 <div className="Profile">
