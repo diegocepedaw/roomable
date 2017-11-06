@@ -1,17 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { otherRequest, otherSuccess, otherError } from './actions';
 import './Profile.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
 
 class OtherProfile extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: null,
+            loading: false,
+            error: false,
+        };
+    }
     componentDidMount() {
-        this.props.dataFetch(this.props.match.params.email);
+        this.dataFetch(this.props.match.params.email);
+    }
+
+    dataFetch(email) {
+        this.setState({
+            matches: null,
+            loading: true,
+            error: false
+        });
+
+        fetch(`/server/api/getuser/${email}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Bad response code');
+                } else {
+                    return response.json();
+                }
+            })
+            .then(json => {
+                this.setState({
+                    data: json,
+                    loading: false,
+                    error: false
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    data: null,
+                    loading: false,
+                    error: true
+                });
+            });
     }
 
     render() {
-        if (this.props.error) {
+        if (this.state.error) {
             return (
                 <div className="Profile">
                     <Col xs={7} xsOffset={1}>
@@ -21,7 +60,7 @@ class OtherProfile extends Component {
             );
         }
 
-        if (!this.props.data || this.props.loading) {
+        if (!this.state.data || this.state.loading) {
             return (
                 <div className="Profile">
                     <Col xs={7} xsOffset={1}>
@@ -31,7 +70,7 @@ class OtherProfile extends Component {
             );
         }
 
-        const attrs = Object.assign(...Object.entries(this.props.data.attributes).map(([key, val]) => {
+        const attrs = Object.assign(...Object.entries(this.state.data.attributes).map(([key, val]) => {
             if (val === true) {
                 return {[key]: 'yes'};
             } else if (val === false) {
@@ -41,7 +80,7 @@ class OtherProfile extends Component {
             }
         }));
 
-        const prefs = Object.assign(...Object.entries(this.props.data.preferences).map(([key, val]) => {
+        const prefs = Object.assign(...Object.entries(this.state.data.preferences).map(([key, val]) => {
             if (val === true) {
                 return {[key]: 'yes'};
             } else if (val === false) {
@@ -55,9 +94,9 @@ class OtherProfile extends Component {
             <div className="Profile">
                 <Col xs={10} xsOffset={1}>
                     <Jumbotron>
-                        <h1><i class="fa fa-user" aria-hidden="true"></i> {this.props.data.handle}</h1>
+                        <h1><i class="fa fa-user" aria-hidden="true"></i> {this.state.data.handle}</h1>
                         <hr />
-                        <p>{this.props.data.description}</p>
+                        <p>{this.state.data.description}</p>
                     </Jumbotron>
                     <Jumbotron>
                         <h1><i class="fa fa-tasks" aria-hidden="true"></i> Preferences</h1>
@@ -162,9 +201,7 @@ class OtherProfile extends Component {
                     <Jumbotron>
                         <h1><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact Links</h1>
                         <hr />
-                        <p><i class="fa fa-envelope" aria-hidden="true"></i><a href={`mailto:${this.props.data.email}`}> {this.props.data.email}</a></p>
-                        <p><i class="fa fa-facebook" aria-hidden="true"></i><a href="https://facebook.com"> facebook</a></p>
-                        <p><i class="fa fa-twitter" aria-hidden="true"></i><a href="https://twitter.com"> twitter</a></p>
+                        <p><i class="fa fa-envelope" aria-hidden="true"></i><a href={`mailto:${this.state.data.email}`}> {this.state.data.email}</a></p>
                     </Jumbotron>
                 </Col>
             </div>
@@ -172,39 +209,4 @@ class OtherProfile extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        data: state.otherUser.data,
-        loading: state.otherUser.loading,
-        error: state.otherUser.error,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        dataFetch: (email) => {
-            dispatch(otherRequest());
-            fetch(`/server/api/getuser/${email}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Bad response code');
-                    } else {
-                        return response.json();
-                    }
-                })
-                .then(json => {
-                    dispatch(otherSuccess(json));
-                })
-                .catch(() => {
-                    dispatch(otherError());
-                });
-        }
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(OtherProfile);
-
-export { OtherProfile };
+export default OtherProfile;
