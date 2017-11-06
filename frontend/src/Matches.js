@@ -8,9 +8,13 @@ import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 import './Matches.css';
 
 class ListItem extends Component {
+    onClick() {
+        this.props.history.push(`/user/${this.props.matchEmail}`);
+    }
+
     render() {
         return (
-            <ListGroupItem className="ListItem" href={`/user/${this.props.matchEmail}`}>
+            <ListGroupItem className="ListItem" onClick={() => this.onClick()}>
                 <div className="ListItemName"><b>{this.props.matchName}</b></div>
                 <div className="ListItemPct">{Math.round(this.props.matchPct)}% Match</div>
                 <div className="ListItemDesc text-muted">{this.props.matchDesc}</div>
@@ -88,7 +92,14 @@ class Matches extends Component {
         const noneMsg = this.state.matches.length === 0 ? <NoMatchesMsg /> : null;
 
         const listItems = this.state.matches.map((val, ind) => (
-            <ListItem matchEmail={val.email} matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
+            <ListItem
+                matchEmail={val.email}
+                matchName={val.handle}
+                matchPct={val.match}
+                matchDesc={val.description}
+                key={ind}
+                history={this.props.history}
+            />
         ));
 
         return (
