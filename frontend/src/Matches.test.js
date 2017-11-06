@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MemoryRouter, Route } from 'react-router';
 import { Matches } from './Matches';
 
 beforeEach(function() {
@@ -21,9 +22,15 @@ beforeEach(function() {
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
-    const props = {
+    const matchesProps = {
         email: '',
         dataFetch: () => {}
     };
-    ReactDOM.render(<Matches {...props} />, div);
+    ReactDOM.render(
+        <MemoryRouter initialEntries={['/matches']} initialIndex={0}>
+            <Route exact path='/matches' render={(props) => (
+                <Matches {...props} {...matchesProps} />
+            )} />
+        </MemoryRouter>,
+        div);
 });
