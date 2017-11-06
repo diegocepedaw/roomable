@@ -145,8 +145,7 @@ def registeruser(request):
         return HttpResponse(status=404)
 
     # ensure the email isn't already registered
-    if AuthUser.objects.get(
-            email=request.POST['email']) is None:
+    if not AuthUser.objects.filter(email=request.POST['email']).exists():
         # create the user with the username=email, email=None, and
         # password=password
         if AuthUser.objects.create_user(
@@ -154,7 +153,11 @@ def registeruser(request):
             None,
             request.POST['password']
         ) is not None:
-            response = {'response': 'true', 'email': request.POST['email']}
+            response = {
+                'response': 'true',
+                'email': request.POST['email'],
+                'authenticated': True
+            }
         else:
             response = {'response': 'Unable to create user.'}
     else:

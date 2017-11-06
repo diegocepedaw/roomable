@@ -28,17 +28,19 @@ class Login extends Component {
 
             if (!json.authenticated) {
                 alert('Bad credentials');
+                this.setState({
+                    submitted: false,
+                });
             } else {
                 this.props.history.push('/profile');
             }
         } catch (error) {
             console.error(error);
             alert('An error occurred, try again later');
+            this.setState({
+                submitted: false,
+            });
         }
-
-        this.setState({
-            submitted: false,
-        });
     }
 
     onEmailEdit(email) {
