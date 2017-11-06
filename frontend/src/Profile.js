@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import './Profile.css';
 
 
 import { Col, Form, Button, Jumbotron } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class Profile extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        if (!this.props.authenticated) return;
         this.dataFetch(this.props.email);
     }
 
@@ -51,6 +54,12 @@ class Profile extends Component {
     }
 
     render() {
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
+
         if (this.state.error) {
             return (
                 <div className="Profile">
@@ -90,16 +99,20 @@ class Profile extends Component {
                         <Form>
                             <p><i className="fa fa-pencil fa-2x" aria-hidden="true"></i></p>
                             <p>
-                                <Button type="submit">
-                                    <a href="/preferences">Edit Preferences</a>
-                                </Button>
+                                <Link to="/preferences">
+                                    <Button>
+                                        Edit Preferences
+                                    </Button>
+                                </Link>
                             </p>
                             <hr />
                             <p><i className="fa fa-flask fa-2x" aria-hidden="true"></i></p>
                             <p>
-                                <Button type="submit">
-                                    <a href="/matches">Find Matches</a>
-                                </Button>
+                                <Link to="/matches">
+                                    <Button>
+                                        Find Matches
+                                    </Button>
+                                </Link>
                             </p>
                         </Form>
                     </Jumbotron>
@@ -111,7 +124,8 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
     return {
-        email: state.token.email,
+        email: state.auth.email,
+        authenticated: state.auth.authenticated,
     };
 };
 

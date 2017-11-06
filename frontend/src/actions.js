@@ -1,9 +1,15 @@
-export const GET_TOKEN = 'GET_TOKEN';
+export const LOGIN_RESET = 'LOGIN_RESET';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
-export function getToken(token, email) {
+export function loginReset() {
     return {
-        type: GET_TOKEN,
-        token,
+        type: LOGIN_RESET
+    };
+}
+
+export function loginSuccess(email) {
+    return {
+        type: LOGIN_SUCCESS,
         email
     };
 }
