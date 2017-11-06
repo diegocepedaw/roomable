@@ -174,11 +174,11 @@ def loginuser(request):
         login(request, user)
         # A backend authenticated the credentials
         response = {
-            'authenticated': 'true',
+            'authenticated': True,
             'email': request.POST['email']}
     else:
         # No backend authenticated the credentials
-        response = {'authenticated': 'false'}
+        response = {'authenticated': False}
     return JsonResponse(response)
 
 

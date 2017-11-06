@@ -1,21 +1,29 @@
 import { combineReducers } from 'redux';
 
 import {
-    GET_TOKEN,
+    LOGIN_RESET,
+    LOGIN_SUCCESS,
 } from './actions';
 
-const initialToken = {
-    token: null,
+const initialAuth = {
     email: null,
+    authenticated: false
 };
 
-function token(state = initialToken, action) {
+function auth(state = initialAuth, action) {
     switch (action.type) {
-        case GET_TOKEN: {
+        case LOGIN_RESET: {
             return {
                 ...state,
-                token: action.token,
-                email: action.email
+                email: null,
+                authenticated: false,
+            };
+        }
+        case LOGIN_SUCCESS: {
+            return {
+                ...state,
+                email: action.email,
+                authenticated: true
             };
         }
         default:
@@ -24,7 +32,7 @@ function token(state = initialToken, action) {
 }
 
 const roomableApp = combineReducers({
-    token,
+    auth,
 });
 
 export default roomableApp;

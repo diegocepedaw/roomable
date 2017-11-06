@@ -97,13 +97,14 @@ class Matches extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state);
     return {
-        email: state.token.email,
+        email: state.auth.email,
     };
 };
 
 export { Matches };
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
 )(Matches);
