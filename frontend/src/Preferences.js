@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Circle } from 'react-google-maps';
+
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+    <GoogleMap
+        defaultZoom={14}
+        defaultCenter={props.center}
+    >
+        <Circle defaultCenter={props.center} radius={1 / 0.00062137} editable={true} />
+    </GoogleMap>
+));
 
 class Preferences extends Component {
     render() {
@@ -14,6 +25,14 @@ class Preferences extends Component {
                         <hr />
                         <p><em>Profile Information</em></p>
                         <p>Fill out information to be shown on your profile</p>
+                        <hr />
+                            <MyMapComponent
+                                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                                loadingElement={<div style={{ height: `100%` }} />}
+                                containerElement={<div style={{ height: `600px` }} />}
+                                mapElement={<div style={{ height: `100%` }} />}
+                                center={{ lat: 42.730172, lng: -73.678803 }}
+                            />
                         <hr />
                         <p>What is your name?</p>
                         <div class="form-group">
