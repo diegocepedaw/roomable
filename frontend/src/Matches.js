@@ -42,13 +42,16 @@ class Matches extends Component {
         };
     }
 
+    // Fetch match data from the server
     dataFetch(email) {
+        // Clear state
         this.setState({
             matches: [],
             loading: true,
             error: false
         });
 
+        // Send get request
         fetch(`/server/api/getmatches/${email}`)
             .then(response => {
                 if (!response.ok) {
@@ -58,6 +61,7 @@ class Matches extends Component {
                 }
             })
             .then(json => {
+                // Sort matches by match percentage
                 const sorted = json.userlist.sort((a, b) => {
                     return b.match - a.match;
                 });
@@ -69,6 +73,7 @@ class Matches extends Component {
                 });
             })
             .catch(() => {
+                // On failure, clear state and indicate error
                 this.setState({
                     matches: [],
                     loading: false,
@@ -78,17 +83,20 @@ class Matches extends Component {
     }
 
     componentDidMount() {
+        // If user is not authenticated, do not fetch matches
         if (!this.props.authenticated) return;
         this.dataFetch(this.props.email);
     }
 
     render() {
+        // Redirect to login page if unauthenticated
         if (!this.props.authenticated) {
             return (
                 <Redirect to="/login" />
             );
         }
 
+        // Show filler message if not matches
         const noneMsg = this.state.matches.length === 0 ? <NoMatchesMsg /> : null;
 
         const listItems = this.state.matches.map((val, ind) => (

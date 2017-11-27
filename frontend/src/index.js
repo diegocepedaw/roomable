@@ -13,6 +13,7 @@ const unsubscribe = store.subscribe(() =>
     console.log(store.getState())
 );
 
+// Create an App instance wrapped in a redux store
 ReactDOM.render(
     <Provider store={store}>
         <App />
