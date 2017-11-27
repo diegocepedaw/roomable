@@ -1,3 +1,10 @@
+// This file is for the Edit Preferences page, where users can edit their preferences if their situations change.
+//    Users are also automatically directed here on first login to create their starting preferences
+
+// HTML DESCRIPTION
+// The file first sets up a form which will submit the information selected to the backend when the submit button is clicked
+// Next comes the form body, which asks all all the questions for the preferences
+// Finally is the Submit and Return to Profile buttons which submit the data and return to the profile when finished
 import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.css';
 
