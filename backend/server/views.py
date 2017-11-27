@@ -141,6 +141,8 @@ def getmatches(request, pk):
         return HttpResponse(status=404)
 
 
+# registers the user in the authentication system if the email hasn't been
+# registered already
 def registeruser(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
@@ -167,6 +169,8 @@ def registeruser(request):
     return JsonResponse(response)
 
 
+# logs the user into the authentication system as long as the email and
+# password are correct
 def loginuser(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
@@ -326,5 +330,4 @@ def updateuserinfo(request):
     response = HttpResponse("", status=302)
     response['Location'] = 'localhost:3000/profile'
     return response
-
     # return JsonResponse({'response': response})
