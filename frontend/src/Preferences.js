@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import 'font-awesome/css/font-awesome.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
@@ -16,11 +18,19 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
 class Preferences extends Component {
     render() {
+        // Redirect to login page if unauthenticated
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
+
         return (
             <div className="Preferences">
                 <Col xs={10} xsOffset={1}>
                     <Jumbotron>
                         <form action="http://127.0.0.1:8000/server/api/updateuserinfo" method="post">
+                        <input type="hidden" name="email" value={this.props.email} />
                         <h1><i class="fa fa-tasks" aria-hidden="true"></i> Preferences</h1>
                         <hr />
                         <p><em>Profile Information</em></p>
@@ -235,4 +245,14 @@ class Preferences extends Component {
     }
 }
 
-export default Preferences;
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        email: state.auth.email,
+        authenticated: state.auth.authenticated,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+)(Preferences);
