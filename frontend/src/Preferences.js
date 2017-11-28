@@ -6,21 +6,50 @@
 // Next comes the form body, which asks all all the questions for the preferences
 // Finally is the Submit and Return to Profile buttons which submit the data and return to the profile when finished
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import 'font-awesome/css/font-awesome.css';
 
 import { Col, Form, FormGroup, FormControl, Button, Jumbotron } from 'react-bootstrap';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Circle } from 'react-google-maps';
+
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+    <GoogleMap
+        defaultZoom={14}
+        defaultCenter={props.center}
+    >
+        <Circle defaultCenter={props.center} radius={1 / 0.00062137} editable={true} />
+    </GoogleMap>
+));
 
 class Preferences extends Component {
     render() {
+        // Redirect to login page if unauthenticated
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
+
         return (
             <div className="Preferences">
                 <Col xs={10} xsOffset={1}>
                     <Jumbotron>
                         <form action="http://127.0.0.1:8000/server/api/updateuserinfo" method="post">
+                        <input type="hidden" name="email" value={this.props.email} />
                         <h1><i class="fa fa-tasks" aria-hidden="true"></i> Preferences</h1>
                         <hr />
                         <p><em>Profile Information</em></p>
                         <p>Fill out information to be shown on your profile</p>
+                        <hr />
+                            <MyMapComponent
+                                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                                loadingElement={<div style={{ height: `100%` }} />}
+                                containerElement={<div style={{ height: `600px` }} />}
+                                mapElement={<div style={{ height: `100%` }} />}
+                                center={{ lat: 42.730172, lng: -73.678803 }}
+                            />
                         <hr />
                         <p>What is your name?</p>
                         <div class="form-group">
@@ -223,4 +252,14 @@ class Preferences extends Component {
     }
 }
 
-export default Preferences;
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        email: state.auth.email,
+        authenticated: state.auth.authenticated,
+    };
+};
+
+export default connect(
+    mapStateToProps,
+)(Preferences);

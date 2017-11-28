@@ -93,11 +93,17 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
+        // Attempt to log in, and if successful, add to redux store
         sendLogin: async (email, password) => {
+            // Reset current credentials
             dispatch(loginReset());
+
+            // Create application/x-www-form-urlencoded POST request
             const form = new FormData();
             form.append('email', email);
             form.append('password', password);
+
+            // Send to server
             return fetch('/server/api/loginuser', {
                 method: 'POST',
                 body: form,
@@ -109,6 +115,7 @@ const mapDispatchToProps = dispatch => {
                     return response.json();
                 }
             }).then(json => {
+                // If successful, add to redux store
                 if(json.authenticated) {
                     dispatch(loginSuccess(json.email));
                 }
