@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.core import serializers
-from .models import User, Preferences, Attributes, Dealbreakers
+from .models import User, Preferences, Attributes, Dealbreakers, Location
 from django.http import HttpResponse, JsonResponse
 
 import json
@@ -15,26 +15,21 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
-def getuser(request, pk):
+class Profile:
 
-    if request.method == 'GET':
+    def __init__(self, targetemail):
+        self.email = targetemail
+        self.user = User.objects.filter(email=targetemail)
+        self.attributes = Attributes.objects.filter(email=targetemail)
+        self.preferences = Preferences.objects.filter(email=targetemail)
+        self.dealbreakers = Dealbreakers.objects.filter(email=targetemail)
+        self.location = Location.objects.filter(email=targetemail)
 
-        targetemail = pk
-        # check that user exists
-        try:
-            User.objects.get(email=targetemail)
-        except User.DoesNotExist:
-            return HttpResponse(status=404)
-
+    def get_details(self):
         # serialize query results
-        attr = json.loads(serializers.serialize(
-            'json', Attributes.objects.filter(email=targetemail)))
-        pref = json.loads(serializers.serialize(
-            'json', Preferences.objects.filter(email=targetemail)))
-        usr = json.loads(
-            serializers.serialize(
-                'json', User.objects.filter(
-                    email=targetemail)))
+        attr = json.loads(serializers.serialize('json', self.attributes))
+        pref = json.loads(serializers.serialize('json', self.preferences))
+        usr = json.loads(serializers.serialize('json', self.user))
 
         # build final json object
         data = OrderedDict([('email',
@@ -47,46 +42,36 @@ def getuser(request, pk):
                              attr[0]['fields']),
                             ('preferences',
                              pref[0]['fields'])])
-
-        return JsonResponse(data)
-
-    else:
-        return HttpResponse(status=404)
+        return data
 
 
-def getmatches(request, pk):
 
-    if request.method == 'GET':
+class Matcher:
 
-        targetemail = pk
-        # check that user exists
-        try:
-            compUser = User.objects.get(email=targetemail)
-        except User.DoesNotExist:
-            return HttpResponse(status=404)
+    def __init__(self):
+        self.userlist = User.objects.all()
 
-        userlist = User.objects.all()
-
+    def get_matches(self, targetemail):
         matchesjson = []
 
         # loop through and calculate matc percentage
         # Build response json
-        for user in userlist:
-            if (user.email == compUser.email):
+        target_profile = Profile(targetemail)
+
+        for user in self.userlist:
+            if (user.email == targetemail):
                 continue
 
+            curr_profile = Profile(user.email)
             # compare target users preferences to other user's attributes
 
             pypref = serializers.serialize(
-                "python", Preferences.objects.filter(
-                    email=targetemail))
+                "python", target_profile.preferences)
             pyattr = serializers.serialize(
-                "python", Attributes.objects.filter(
-                    email=user.email))
+                "python", curr_profile.attributes)
 
             dealbreakers = serializers.serialize(
-                "python", Dealbreakers.objects.filter(
-                    email=targetemail))
+                "python", target_profile.dealbreakers)
 
             # calculate match percentage
             questionCount = 0.0
@@ -111,13 +96,12 @@ def getmatches(request, pk):
 
             # serialize query results
             attr = json.loads(serializers.serialize(
-                'json', Attributes.objects.filter(email=user.email)))
+                'json', curr_profile.attributes))
             pref = json.loads(serializers.serialize(
-                'json', Preferences.objects.filter(email=user.email)))
+                'json', curr_profile.preferences))
             usr = json.loads(
                 serializers.serialize(
-                    'json', User.objects.filter(
-                        email=user.email)))
+                    'json',  curr_profile.user))
 
             data = OrderedDict([('email',
                                  usr[0]['fields']['email']),
@@ -134,9 +118,43 @@ def getmatches(request, pk):
 
             matchesjson.append(data)
 
-        matchResponse = {'userlist': matchesjson}
+        match_response = {'userlist': matchesjson}
+        return match_response
 
-        return JsonResponse(matchResponse)
+
+def getuser(request, pk):
+
+    if request.method == 'GET':
+
+        targetemail = pk
+        # check that user exists
+        try:
+            User.objects.get(email=targetemail)
+        except User.DoesNotExist:
+            return HttpResponse(status=404)
+
+        curr_user = Profile(targetemail)
+        data = curr_user.get_details()
+        return JsonResponse(data)
+
+    else:
+        return HttpResponse(status=404)
+
+
+def getmatches(request, pk):
+
+    if request.method == 'GET':
+
+        targetemail = pk
+        # check that user exists
+        try:
+            compUser = User.objects.get(email=targetemail)
+        except User.DoesNotExist:
+            return HttpResponse(status=404)
+
+        matcher_object = Matcher()
+        match_response = matcher_object.get_matches(targetemail)
+        return JsonResponse(match_response)
     else:
         return HttpResponse(status=404)
 
