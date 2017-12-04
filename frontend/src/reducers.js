@@ -1,100 +1,29 @@
 import { combineReducers } from 'redux';
 
 import {
-    GET_TOKEN,
-    USER_REQUEST,
-    USER_SUCCESS,
-    USER_ERROR,
-    MATCHES_REQUEST,
-    MATCHES_SUCCESS,
-    MATCHES_ERROR
+    LOGIN_RESET,
+    LOGIN_SUCCESS,
 } from './actions';
 
-const initialToken = {
-    token: null,
+const initialAuth = {
     email: null,
+    authenticated: false
 };
 
-const initialUser = {
-    data: null,
-    loading: false,
-    error: false,
-};
-
-const initialMatches = {
-    data: [],
-    loading: false,
-    error: false,
-};
-
-function token(state = initialToken, action) {
+function auth(state = initialAuth, action) {
     switch (action.type) {
-        case GET_TOKEN: {
+        case LOGIN_RESET: {
             return {
                 ...state,
-                token: action.token,
-                email: action.email
+                email: null,
+                authenticated: false,
             };
         }
-        default:
-            return state;
-    }
-}
-
-function user(state = initialUser, action) {
-    switch (action.type) {
-        case USER_REQUEST: {
+        case LOGIN_SUCCESS: {
             return {
                 ...state,
-                data: null,
-                loading: true,
-                error: false
-            };
-        }
-        case USER_SUCCESS: {
-            return {
-                ...state,
-                data: action.data,
-                loading: false,
-                error: false,
-            };
-        }
-        case USER_ERROR: {
-            return {
-                ...state,
-                data: null,
-                loading: false,
-                error: true
-            };
-        }
-        default:
-            return state;
-    }
-}
-
-function matches(state = initialMatches, action) {
-    switch (action.type) {
-        case MATCHES_REQUEST: {
-            return {
-                ...state,
-                data: [],
-                loading: true,
-                error: false
-            };
-        }
-        case MATCHES_SUCCESS: {
-            return {
-                ...state,
-                data: action.data,
-                loading: false,
-                error: false
-            };
-        }
-        case MATCHES_ERROR: {
-            return {
-                ...state,
-                loading: false,
-                error: true
+                email: action.email,
+                authenticated: true
             };
         }
         default:
@@ -103,9 +32,7 @@ function matches(state = initialMatches, action) {
 }
 
 const roomableApp = combineReducers({
-    token,
-    user,
-    matches
+    auth,
 });
 
 export default roomableApp;

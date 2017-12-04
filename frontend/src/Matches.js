@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { matchesRequest, matchesSuccess, matchesError } from './actions';
+
+import { Redirect } from 'react-router';
 
 import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 import './Matches.css';
 
 class ListItem extends Component {
+    onClick() {
+        this.props.history.push(`/user/${this.props.matchEmail}`);
+    }
+
     render() {
         return (
-            <ListGroupItem className="ListItem" href={`/user/${this.props.matchName}`}>
+            <ListGroupItem className="ListItem" onClick={() => this.onClick()}>
                 <div className="ListItemName"><b>{this.props.matchName}</b></div>
                 <div className="ListItemPct">{Math.round(this.props.matchPct)}% Match</div>
                 <div className="ListItemDesc text-muted">{this.props.matchDesc}</div>
@@ -27,15 +32,82 @@ class NoMatchesMsg extends Component {
 }
 
 class Matches extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            matches: [],
+            loading: false,
+            error: false,
+        };
+    }
+
+    // Fetch match data from the server
+    dataFetch(email) {
+        // Clear state
+        this.setState({
+            matches: [],
+            loading: true,
+            error: false
+        });
+
+        // Send get request
+        fetch(`/server/api/getmatches/${email}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Bad response code');
+                } else {
+                    return response.json();
+                }
+            })
+            .then(json => {
+                // Sort matches by match percentage
+                const sorted = json.userlist.sort((a, b) => {
+                    return b.match - a.match;
+                });
+
+                this.setState({
+                    matches: sorted,
+                    loading: false,
+                    error: false
+                });
+            })
+            .catch(() => {
+                // On failure, clear state and indicate error
+                this.setState({
+                    matches: [],
+                    loading: false,
+                    error: true
+                });
+            });
+    }
+
     componentDidMount() {
-        this.props.dataFetch(this.props.email);
+        // If user is not authenticated, do not fetch matches
+        if (!this.props.authenticated) return;
+        this.dataFetch(this.props.email);
     }
 
     render() {
-        const noneMsg = this.props.matches.length === 0 ? <NoMatchesMsg /> : null;
+        // Redirect to login page if unauthenticated
+        if (!this.props.authenticated) {
+            return (
+                <Redirect to="/login" />
+            );
+        }
 
-        const listItems = this.props.matches.map((val, ind) => (
-            <ListItem matchName={val.handle} matchPct={val.match} matchDesc={val.description} key={ind} />
+        // Show filler message if not matches
+        const noneMsg = this.state.matches.length === 0 ? <NoMatchesMsg /> : null;
+
+        const listItems = this.state.matches.map((val, ind) => (
+            <ListItem
+                matchEmail={val.email}
+                matchName={val.handle}
+                matchPct={val.match}
+                matchDesc={val.description}
+                key={ind}
+                history={this.props.history}
+            />
         ));
 
         return (
@@ -53,36 +125,10 @@ class Matches extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state);
     return {
-        matches: state.matches.data,
-        loading: state.matches.loading,
-        email: state.token.email,
-        error: state.matches.error,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        dataFetch: (email) => {
-            dispatch(matchesRequest());
-            fetch(`/server/api/getmatches/${email}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Bad response code');
-                    } else {
-                        return response.json();
-                    }
-                })
-                .then(json => {
-                    const sorted = json.userlist.sort((a, b) => {
-                        return b.match - a.match;
-                    });
-                    dispatch(matchesSuccess(sorted));
-                })
-                .catch(() => {
-                    dispatch(matchesError());
-                });
-        }
+        email: state.auth.email,
+        authenticated: state.auth.authenticated,
     };
 };
 
@@ -90,5 +136,4 @@ export { Matches };
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(Matches);
