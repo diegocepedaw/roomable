@@ -45,7 +45,6 @@ class Profile:
         return data
 
 
-
 class Matcher:
 
     def __init__(self):
@@ -133,9 +132,10 @@ def getuser(request, pk):
         except User.DoesNotExist:
             return HttpResponse(status=404)
 
-        curr_user = Profile(targetemail)
-        data = curr_user.get_details()
-        return JsonResponse(data)
+        # create profile object
+        target_profile = Profile(targetemail)
+        # get JSON serialized user data
+        return JsonResponse(target_profile.get_details())
 
     else:
         return HttpResponse(status=404)
@@ -148,13 +148,14 @@ def getmatches(request, pk):
         targetemail = pk
         # check that user exists
         try:
-            compUser = User.objects.get(email=targetemail)
+            User.objects.get(email=targetemail)
         except User.DoesNotExist:
             return HttpResponse(status=404)
 
+        # create matcher object
         matcher_object = Matcher()
-        match_response = matcher_object.get_matches(targetemail)
-        return JsonResponse(match_response)
+        # get json list of matches
+        return JsonResponse(matcher_object.get_matches(targetemail))
     else:
         return HttpResponse(status=404)
 
@@ -258,7 +259,7 @@ def updateuserinfo(request):
             data['tv'] = True if request.POST['tv'] is 'True' else False
             # store attributes
             (attr, created) = Attributes.objects.update_or_create(
-                                email=user, defaults=data)
+                email=user, defaults=data)
             # ensure the attributes were updated
             if attr is not None:
                 # update dict for the preferences
@@ -296,7 +297,7 @@ def updateuserinfo(request):
                               is 'True' else False)
                 # store preferences
                 (pref, created) = Preferences.objects.update_or_create(
-                                    email=user, defaults=data)
+                    email=user, defaults=data)
                 # ensure the preferences were updated
                 if pref is not None:
                     # update dict for the dealbreakers
@@ -336,7 +337,7 @@ def updateuserinfo(request):
                                   else False)
                     # store dealbreakers
                     (db, created) = Dealbreakers.objects.update_or_create(
-                                        usr=user, defaults=data)
+                        usr=user, defaults=data)
                     # ensure the dealbreakers were updated
                     if db is not None:
                         # return JsonResponse({'response': 'true',

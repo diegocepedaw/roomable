@@ -7,9 +7,10 @@ from geoposition.fields import GeopositionField
 
 # Create your models here.
 
+
 class User(models.Model):
     usr = models.ForeignKey('auth.User')
-    email =  models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     handle = models.CharField(max_length=200)
     description = models.TextField()
 
@@ -19,7 +20,7 @@ class User(models.Model):
 
 class Attributes(models.Model):
     usr = models.ForeignKey('server.User')
-    email =  models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     gender = models.CharField(max_length=1, default='M')
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
@@ -29,7 +30,7 @@ class Attributes(models.Model):
     friends = models.BooleanField(default=False)
     music = models.BooleanField(default=False)
     language = models.CharField(max_length=200, default='english')
-    budget= models.IntegerField(default=0)
+    budget = models.IntegerField(default=0)
     dishes = models.BooleanField(default=False)
     skimpy = models.BooleanField(default=False)
     drink = models.BooleanField(default=False)
@@ -39,10 +40,11 @@ class Attributes(models.Model):
 
     def __str__(self):
         return self.email
+
 
 class Preferences(models.Model):
     usr = models.ForeignKey('server.User')
-    email =  models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     gender = models.CharField(max_length=1, default='M')
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
@@ -52,7 +54,7 @@ class Preferences(models.Model):
     friends = models.BooleanField(default=False)
     music = models.BooleanField(default=False)
     language = models.CharField(max_length=200, default='english')
-    budget= models.IntegerField(default=0)
+    budget = models.IntegerField(default=0)
     dishes = models.BooleanField(default=False)
     skimpy = models.BooleanField(default=False)
     drink = models.BooleanField(default=False)
@@ -63,9 +65,10 @@ class Preferences(models.Model):
     def __str__(self):
         return self.email
 
+
 class Dealbreakers(models.Model):
     usr = models.ForeignKey('server.User')
-    email =  models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     gender = models.BooleanField(default=False)
     pet = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
@@ -75,7 +78,7 @@ class Dealbreakers(models.Model):
     friends = models.BooleanField(default=False)
     music = models.BooleanField(default=False)
     language = models.BooleanField(default=False)
-    budget= models.BooleanField(default=False)
+    budget = models.BooleanField(default=False)
     dishes = models.BooleanField(default=False)
     skimpy = models.BooleanField(default=False)
     drink = models.BooleanField(default=False)
@@ -86,9 +89,10 @@ class Dealbreakers(models.Model):
     def __str__(self):
         return self.email
 
+
 class Location(models.Model):
     usr = models.ForeignKey('server.User')
-    email =  models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     radius = models.IntegerField(default=0)
     position = GeopositionField()
 
