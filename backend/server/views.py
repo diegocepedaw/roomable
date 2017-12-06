@@ -11,6 +11,8 @@ from collections import OrderedDict
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from math import sin, cos, sqrt, atan2, radians
+
 
 # Create your views here.
 
@@ -23,7 +25,7 @@ class Profile:
         self.attributes = Attributes.objects.filter(email=targetemail)
         self.preferences = Preferences.objects.filter(email=targetemail)
         self.dealbreakers = Dealbreakers.objects.filter(email=targetemail)
-        self.location = Location.objects.filter(email=targetemail)
+        self.location = Location.objects.get(email=targetemail)
 
     def get_details(self):
         # serialize query results
@@ -62,6 +64,13 @@ class Matcher:
                 continue
 
             curr_profile = Profile(user.email)
+            print get_distance(curr_profile.location.position.latitude, curr_profile.location.position.longitude, target_profile.location.position.latitude, target_profile.location.position.longitude)
+            if (get_distance(curr_profile.location.position.latitude,
+                             curr_profile.location.position.longitude,
+                             target_profile.location.position.latitude,
+                             target_profile.location.position.longitude) > target_profile.location.radius):
+                continue
+
             # compare target users preferences to other user's attributes
 
             pypref = serializers.serialize(
@@ -100,7 +109,7 @@ class Matcher:
                 'json', curr_profile.preferences))
             usr = json.loads(
                 serializers.serialize(
-                    'json',  curr_profile.user))
+                    'json', curr_profile.user))
 
             data = OrderedDict([('email',
                                  usr[0]['fields']['email']),
@@ -119,6 +128,27 @@ class Matcher:
 
         match_response = {'userlist': matchesjson}
         return match_response
+
+
+def get_distance(lat1, lon1, lat2, lon2):
+    # approximate radius of earth in km
+    R = 6373.0
+
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    # calculate the distance between two points by latitue and longitude
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+
+    return distance
 
 
 def getuser(request, pk):
