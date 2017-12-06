@@ -13,6 +13,7 @@ const initialAuth = {
 function auth(state = initialAuth, action) {
     switch (action.type) {
         case LOGIN_RESET: {
+            window.localStorage.removeItem('rmblEmail');
             return {
                 ...state,
                 email: null,
@@ -20,6 +21,7 @@ function auth(state = initialAuth, action) {
             };
         }
         case LOGIN_SUCCESS: {
+            window.localStorage.setItem('rmblEmail', action.email);
             return {
                 ...state,
                 email: action.email,

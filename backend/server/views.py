@@ -66,10 +66,10 @@ class Matcher:
                 continue
 
             curr_profile = Profile(user.email)
-            print get_distance(curr_profile.location.position.latitude,
+            print(get_distance(curr_profile.location.position.latitude,
                                curr_profile.location.position.longitude,
                                target_profile.location.position.latitude,
-                               target_profile.location.position.longitude)
+                               target_profile.location.position.longitude))
             if (get_distance(curr_profile.location.position.latitude,
                              curr_profile.location.position.longitude,
                              target_profile.location.position.latitude,
