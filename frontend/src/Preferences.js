@@ -43,14 +43,17 @@ class Preferences extends Component {
                         <p><em>Profile Information</em></p>
                         <p>Fill out information to be shown on your profile</p>
                         <hr />
-                            <MyMapComponent
+                        < MyMapComponent
                                 googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `600px` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
                                 center={{ lat: 42.730172, lng: -73.678803 }}
-                            />
+                        />
                         <hr />
+                        <input type="hidden" id = "latinp" name="lat" value="42.730172"></input>
+                        <input type="hidden" id = "lnginp" name="lng" value="-73.678803"></input>
+                        <input type="hidden" id = "rnginp" name="rng" value="200"></input>
                         <p>What is your name?</p>
                         <div class="form-group">
                           <textarea class="form-control" name="handle" id="Textarea1" rows="1"></textarea>
@@ -234,12 +237,12 @@ class Preferences extends Component {
                         <label class="checkbox-inline"><input type="checkbox" name="db_tv" />Dealbreaker!</label>
                         <p></p>
 
-                        <Button type="submit">
+                        <Button type="submit" onClick={fillGoogleMaps}>
                             Submit
                         </Button>
 
                         <a href="/profile">
-                        <Button>
+                        <Button >
                             Return to Profile
                         </Button>
                         </a>
@@ -251,6 +254,17 @@ class Preferences extends Component {
         );
     }
 }
+
+const fillGoogleMaps = state =>{
+  console.log(this.props);
+  var lat = "0"
+  var lng = "10"
+  var rng = "2"
+  document.getElementById("latinp").value = lat;
+  document.getElementById("lnginp").value = lng;
+  document.getElementById("rnginp").value = rng;
+  return;
+};
 
 const mapStateToProps = state => {
     console.log(state);
