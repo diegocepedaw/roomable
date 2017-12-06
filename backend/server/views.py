@@ -13,6 +13,8 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 
+from geoposition.fields import Geoposition
+
 
 # Create your views here.
 
@@ -64,11 +66,15 @@ class Matcher:
                 continue
 
             curr_profile = Profile(user.email)
-            print get_distance(curr_profile.location.position.latitude, curr_profile.location.position.longitude, target_profile.location.position.latitude, target_profile.location.position.longitude)
+            print get_distance(curr_profile.location.position.latitude,
+                               curr_profile.location.position.longitude,
+                               target_profile.location.position.latitude,
+                               target_profile.location.position.longitude)
             if (get_distance(curr_profile.location.position.latitude,
                              curr_profile.location.position.longitude,
                              target_profile.location.position.latitude,
-                             target_profile.location.position.longitude) > target_profile.location.radius):
+                             target_profile.location.position.longitude)
+                    > target_profile.location.radius):
                 continue
 
             # compare target users preferences to other user's attributes
@@ -262,123 +268,141 @@ def updateuserinfo(request):
         print('user', user)
         # ensure the basic user info was updated
         if user is not None:
-            # create dict for the attributes
-            data = {}
-            data['email'] = request.POST['email']
-            data['gender'] = 'M' if request.POST['gender'] is 'Male' else 'F'
-            data['pet'] = True if request.POST['pet'] is 'True' else False
-            data['smoke'] = True if request.POST['smoke'] is 'True' else False
-            data['sleep_late'] = (True if request.POST['sleep_late'] is 'True'
-                                  else False)
-            data['rise_early'] = (True if request.POST['rise_early'] is 'True'
-                                  else False)
-            data['neat'] = True if request.POST['neat'] is 'True' else False
-            data['friends'] = (True if request.POST['friends'] is 'True'
-                               else False)
-            data['music'] = True if request.POST['music'] is 'True' else False
-            data['language'] = request.POST['language'].lower()
-            data['budget'] = int(request.POST['budget'] or 0)
-            data['dishes'] = (True if request.POST['dishes'] is 'True'
-                              else False)
-            data['skimpy'] = (True if request.POST['skimpy'] is 'True'
-                              else False)
-            data['drink'] = True if request.POST['drink'] is 'True' else False
-            data['drugs'] = True if request.POST['drugs'] is 'True' else False
-            data['shower'] = (True if request.POST['shower'] is 'True'
-                              else False)
-            data['tv'] = True if request.POST['tv'] is 'True' else False
-            # store attributes
-            (attr, created) = Attributes.objects.update_or_create(
-                email=user, defaults=data)
-            # ensure the attributes were updated
-            if attr is not None:
-                # update dict for the preferences
-                data['gender'] = (True if request.POST['gender_pref']
-                                  is 'True' else False)
-                data['pet'] = (True if request.POST['pet_pref']
-                               is 'True' else False)
-                data['smoke'] = (True if request.POST['smoke_pref']
-                                 is 'True' else False)
-                data['sleep_late'] = (True if request.POST['sleep_late_pref']
+            # store location
+            (loc, created) = Location.objects.update_or_create(
+                email=user, defaults={'email': request.POST['email'],
+                                      'radius': request.POST['rng'],
+                                      'position': Geoposition(
+                                                    request.POST['lat'],
+                                                    request.POST['lng'])})
+            if loc is not None:
+                # create dict for the attributes
+                data = {}
+                data['email'] = request.POST['email']
+                data['gender'] = ('M' if request.POST['gender'] is 'Male'
+                                  else 'F')
+                data['pet'] = True if request.POST['pet'] is 'True' else False
+                data['smoke'] = (True if request.POST['smoke'] is 'True'
+                                 else False)
+                data['sleep_late'] = (True if request.POST['sleep_late']
                                       is 'True' else False)
-                data['rise_early'] = (True if request.POST['rise_early_pref']
+                data['rise_early'] = (True if request.POST['rise_early']
                                       is 'True' else False)
-                data['neat'] = (True if request.POST['neat_pref']
-                                is 'True' else False)
-                data['friends'] = (True if request.POST['friends_pref']
-                                   is 'True' else False)
-                data['music'] = (True if request.POST['music_pref']
-                                 is 'True' else False)
-                data['language'] = (True if request.POST['language_pref']
-                                    is 'True' else False)
-                # del data['budget']
-                data['budget'] = 0
-                data['dishes'] = (True if request.POST['dishes_pref']
-                                  is 'True' else False)
-                data['skimpy'] = (True if request.POST['skimpy_pref']
-                                  is 'True' else False)
-                data['drink'] = (True if request.POST['drink_pref']
-                                 is 'True' else False)
-                data['drugs'] = (True if request.POST['drug_pref']
-                                 is 'True' else False)
-                data['shower'] = (True if request.POST['shower_pref']
-                                  is 'True' else False)
-                data['tv'] = (True if request.POST['tv_pref']
-                              is 'True' else False)
-                # store preferences
-                (pref, created) = Preferences.objects.update_or_create(
-                    email=user, defaults=data)
-                # ensure the preferences were updated
-                if pref is not None:
-                    # update dict for the dealbreakers
-                    data['gender'] = (True if 'db_gender' in request.POST
-                                      else False)
-                    data['pet'] = (True if 'db_pet' in request.POST
+                data['neat'] = (True if request.POST['neat'] is 'True'
+                                else False)
+                data['friends'] = (True if request.POST['friends'] is 'True'
                                    else False)
-                    data['smoke'] = (True if 'db_smoke' in request.POST
-                                     else False)
-                    data['sleep_late'] = (True if 'db_sleep_late'
-                                          in request.POST
-                                          else False)
-                    data['rise_early'] = (True if 'db_rise_early'
-                                          in request.POST
-                                          else False)
-                    data['neat'] = (True if 'db_neat' in request.POST
-                                    else False)
-                    data['friends'] = (True if 'db_friends' in request.POST
-                                       else False)
-                    data['music'] = (True if 'db_music' in request.POST
-                                     else False)
-                    data['language'] = (True if 'db_language' in request.POST
-                                        else False)
-                    # del data['budget']
-                    data['budget'] = False
-                    data['dishes'] = (True if 'db_dishes' in request.POST
-                                      else False)
-                    data['skimpy'] = (True if 'db_skimpy' in request.POST
-                                      else False)
-                    data['drink'] = (True if 'db_drink' in request.POST
-                                     else False)
-                    data['drugs'] = (True if 'db_drugs' in request.POST
-                                     else False)
-                    data['shower'] = (True if 'db_shower' in request.POST
-                                      else False)
-                    data['tv'] = (True if 'db_tv' in request.POST
+                data['music'] = (True if request.POST['music'] is 'True'
+                                 else False)
+                data['language'] = request.POST['language'].lower()
+                data['budget'] = int(request.POST['budget'] or 0)
+                data['dishes'] = (True if request.POST['dishes'] is 'True'
                                   else False)
-                    # store dealbreakers
-                    (db, created) = Dealbreakers.objects.update_or_create(
-                        usr=user, defaults=data)
-                    # ensure the dealbreakers were updated
-                    if db is not None:
-                        # return JsonResponse({'response': 'true',
-                        #                      'email': request.POST['email']})
-                        response = HttpResponse("", status=302)
-                        response['Location'] = 'localhost:3000/profile'
-                        return response
-                    else:
-                        response = 'Unable to store user dealbreakers.'
+                data['skimpy'] = (True if request.POST['skimpy'] is 'True'
+                                  else False)
+                data['drink'] = (True if request.POST['drink'] is 'True'
+                                 else False)
+                data['drugs'] = (True if request.POST['drugs'] is 'True'
+                                 else False)
+                data['shower'] = (True if request.POST['shower'] is 'True'
+                                  else False)
+                data['tv'] = True if request.POST['tv'] is 'True' else False
+                # store attributes
+                (attr, created) = Attributes.objects.update_or_create(
+                    email=user, defaults=data)
+                # ensure the attributes were updated
+                if attr is not None:
+                    # update dict for the preferences
+                    data['gender'] = (True if request.POST['gender_pref']
+                                      is 'True' else False)
+                    data['pet'] = (True if request.POST['pet_pref']
+                                   is 'True' else False)
+                    data['smoke'] = (True if request.POST['smoke_pref']
+                                     is 'True' else False)
+                    data['sleep_late'] = (True if
+                                          request.POST['sleep_late_pref']
+                                          is 'True' else False)
+                    data['rise_early'] = (True if
+                                          request.POST['rise_early_pref']
+                                          is 'True' else False)
+                    data['neat'] = (True if request.POST['neat_pref']
+                                    is 'True' else False)
+                    data['friends'] = (True if request.POST['friends_pref']
+                                       is 'True' else False)
+                    data['music'] = (True if request.POST['music_pref']
+                                     is 'True' else False)
+                    data['language'] = (True if request.POST['language_pref']
+                                        is 'True' else False)
+                    # del data['budget']
+                    data['budget'] = 0
+                    data['dishes'] = (True if request.POST['dishes_pref']
+                                      is 'True' else False)
+                    data['skimpy'] = (True if request.POST['skimpy_pref']
+                                      is 'True' else False)
+                    data['drink'] = (True if request.POST['drink_pref']
+                                     is 'True' else False)
+                    data['drugs'] = (True if request.POST['drug_pref']
+                                     is 'True' else False)
+                    data['shower'] = (True if request.POST['shower_pref']
+                                      is 'True' else False)
+                    data['tv'] = (True if request.POST['tv_pref']
+                                  is 'True' else False)
+                    # store preferences
+                    (pref, created) = Preferences.objects.update_or_create(
+                        email=user, defaults=data)
+                    # ensure the preferences were updated
+                    if pref is not None:
+                        # update dict for the dealbreakers
+                        data['gender'] = (True if 'db_gender' in request.POST
+                                          else False)
+                        data['pet'] = (True if 'db_pet' in request.POST
+                                       else False)
+                        data['smoke'] = (True if 'db_smoke' in request.POST
+                                         else False)
+                        data['sleep_late'] = (True if 'db_sleep_late'
+                                              in request.POST
+                                              else False)
+                        data['rise_early'] = (True if 'db_rise_early'
+                                              in request.POST
+                                              else False)
+                        data['neat'] = (True if 'db_neat' in request.POST
+                                        else False)
+                        data['friends'] = (True if 'db_friends' in request.POST
+                                           else False)
+                        data['music'] = (True if 'db_music' in request.POST
+                                         else False)
+                        data['language'] = (True if 'db_language' in
+                                            request.POST else False)
+                        # del data['budget']
+                        data['budget'] = False
+                        data['dishes'] = (True if 'db_dishes' in request.POST
+                                          else False)
+                        data['skimpy'] = (True if 'db_skimpy' in request.POST
+                                          else False)
+                        data['drink'] = (True if 'db_drink' in request.POST
+                                         else False)
+                        data['drugs'] = (True if 'db_drugs' in request.POST
+                                         else False)
+                        data['shower'] = (True if 'db_shower' in request.POST
+                                          else False)
+                        data['tv'] = (True if 'db_tv' in request.POST
+                                      else False)
+                        # store dealbreakers
+                        (db, created) = Dealbreakers.objects.update_or_create(
+                            usr=user, defaults=data)
+                        # ensure the dealbreakers were updated
+                        if db is not None:
+                            # return JsonResponse({'response': 'true',
+                            #                  'email': request.POST['email']})
+                            response = HttpResponse("", status=302)
+                            response['Location'] = 'localhost:3000/profile'
+                            return response
+                        else:
+                            response = 'Unable to store user dealbreakers.'
+                else:
+                    response = 'Unable to store user attributes.'
             else:
-                response = 'Unable to store user attributes.'
+                response = 'Unable to store user location.'
         else:
             response = 'Unable to store user information.'
     else:
