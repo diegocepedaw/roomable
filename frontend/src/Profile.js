@@ -6,6 +6,7 @@ import './Profile.css';
 
 import { Col, Form, Button, Jumbotron } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { loginReset } from './actions';
 
 class Profile extends Component {
     constructor(props) {
@@ -92,6 +93,7 @@ class Profile extends Component {
                         <h1><i className="fa fa-address-book-o" aria-hidden="true"></i> Contact Links</h1>
                         <hr />
                         <p><i className="fa fa-envelope" aria-hidden="true"></i> <a href={`mailto:${this.state.data.email}`}>{this.state.data.email}</a></p>
+                        <h1 />
                     </Jumbotron>
                 </Col>
                 <Col xs={3} >
@@ -114,6 +116,10 @@ class Profile extends Component {
                                     </Button>
                                 </Link>
                             </p>
+                            <hr />
+                            <p>
+                                <Button onClick={this.props.logOut}>Log out</Button>
+                            </p>
                         </Form>
                     </Jumbotron>
                 </Col>
@@ -129,6 +135,15 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        logOut: () => {
+            dispatch(loginReset());
+        }
+    };
+};
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Profile);
