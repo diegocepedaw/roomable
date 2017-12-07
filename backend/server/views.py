@@ -27,7 +27,7 @@ class Profile:
         self.attributes = Attributes.objects.filter(email=targetemail)
         self.preferences = Preferences.objects.filter(email=targetemail)
         self.dealbreakers = Dealbreakers.objects.filter(email=targetemail)
-        self.location = Location.objects.get(email=targetemail)
+        self.location = Location.objects.filter(email=targetemail)[0]
 
     def get_details(self):
         # serialize query results
@@ -180,14 +180,12 @@ def getuser(request, pk):
 def getmatches(request, pk):
 
     if request.method == 'GET':
-
         targetemail = pk
         # check that user exists
         try:
             User.objects.get(email=targetemail)
         except User.DoesNotExist:
             return HttpResponse(status=404)
-
         # create matcher object
         matcher_object = Matcher()
         # get json list of matches
@@ -203,7 +201,7 @@ def registeruser(request):
         return HttpResponse(status=404)
 
     # ensure the email isn't already registered
-    if not AuthUser.objects.filter(email=request.POST['email']).exists():
+    if not AuthUser.objects.filter(username=request.POST['email']).exists():
         # create the user with the username=email, email=None, and
         # password=password
         if AuthUser.objects.create_user(
@@ -252,33 +250,36 @@ def updateuserinfo(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
 
-    print(request.POST)
-
     # check if the user is logged in
     # if request.user.is_authenticated:
     if True:
+        data = {}
+        data['usr'] = AuthUser.objects.filter(
+                      username=request.POST['email'])[0]
+        data['email'] = request.POST['email']
+
         # store the handle and description in the PublicUser
         (user, created) = User.objects.update_or_create(
             email=request.POST['email'],
             defaults={
-                'email': request.POST['email'],
+                'usr': data['usr'],
+                'email': data['email'],
                 'handle': request.POST['handle'],
                 'description': request.POST['description']})
 
-        print('user', user)
         # ensure the basic user info was updated
         if user is not None:
+            data['usr'] = user
             # store location
             (loc, created) = Location.objects.update_or_create(
-                email=user, defaults={'email': request.POST['email'],
+                email=user, defaults={'usr': data['usr'],
+                                      'email': data['email'],
                                       'radius': request.POST['rng'],
                                       'position': Geoposition(
                                                     request.POST['lat'],
                                                     request.POST['lng'])})
             if loc is not None:
                 # create dict for the attributes
-                data = {}
-                data['email'] = request.POST['email']
                 data['gender'] = ('M' if request.POST['gender'] is 'Male'
                                   else 'F')
                 data['pet'] = True if request.POST['pet'] is 'True' else False
@@ -408,7 +409,6 @@ def updateuserinfo(request):
     else:
         # anonymous users shouldn't be able to access this
         response = 'User not logged in.'
-    print("test")
 
     response = HttpResponse("", status=302)
     response['Location'] = 'localhost:3000/profile'
