@@ -19,11 +19,51 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         defaultZoom={14}
         defaultCenter={props.center}
     >
-        <Circle defaultCenter={props.center} radius={1 / 0.00062137} editable={true} />
+        <Circle
+            defaultCenter={props.center}
+            radius={1 / 0.00062137}
+            editable={true}
+            onCenterChanged={
+                function() {
+                    return props.onCenterChanged(this.getCenter());
+                }
+            }
+            onRadiusChanged={
+                function() {
+                    return props.onRadiusChanged(this.getRadius());
+                }
+            }
+        />
     </GoogleMap>
 ));
 
 class Preferences extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = Object.assign({
+            radius: 1 / 0.00062137,
+            lat: 42.730172,
+            lng: -73.678803
+        }, props.center);
+    }
+
+    onCenterChanged(center) {
+        console.log(center);
+        console.log(center.lat());
+        this.setState(Object.assign({}, this.state, {
+            lat: center.lat(),
+            lng: center.lng()
+        }));
+    }
+
+    onRadiusChanged(radius) {
+        console.log(radius);
+        this.setState(Object.assign({}, this.state, {
+            radius
+        }));
+    }
+
     render() {
         // Redirect to login page if unauthenticated
         if (!this.props.authenticated) {
@@ -49,11 +89,13 @@ class Preferences extends Component {
                                 containerElement={<div style={{ height: `600px` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
                                 center={{ lat: 42.730172, lng: -73.678803 }}
+                                onCenterChanged={(center) => this.onCenterChanged(center)}
+                                onRadiusChanged={(radius) => this.onRadiusChanged(radius)}
                         />
                         <hr />
-                        <input type="hidden" id = "latinp" name="lat" value="42.730172"></input>
-                        <input type="hidden" id = "lnginp" name="lng" value="-73.678803"></input>
-                        <input type="hidden" id = "rnginp" name="rng" value="200"></input>
+                        <input type="hidden" id = "latinp" name="lat" value={this.state.lat}></input>
+                        <input type="hidden" id = "lnginp" name="lng" value={this.state.lng}></input>
+                        <input type="hidden" id = "rnginp" name="rng" value={Math.ceil(this.state.radius / 1000)}></input>
                         <p>What is your name?</p>
                         <div class="form-group">
                           <textarea class="form-control" name="handle" id="Textarea1" rows="1"></textarea>
