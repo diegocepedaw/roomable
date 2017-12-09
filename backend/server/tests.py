@@ -42,9 +42,10 @@ class WebsiteTests(TestCase):
 
     def test_get_user(self):
         '''Test getting the user's data from the database'''
-        response = self.client.get('/server/api/getuser/sally')
+        self.create_basic_user('bob_email', 'bob_pass')
+        response = self.client.get('/server/api/getuser/bob_email/')
         jsonresponse = json.loads(response.content)
-        self.assertEqual(jsonresponse['email'], 'sally')
+        self.assertEqual(jsonresponse['email'], 'bob_email')
 
     def test_get_user_without_parameter(self):
         '''Test getting user data without a parameter'''
@@ -53,15 +54,17 @@ class WebsiteTests(TestCase):
 
     def test_get_user_with_invalid_user(self):
         '''Test getting user data for an invalid user'''
-        response = self.client.get('/server/api/getuser/4321')
+        response = self.client.get('/server/api/getuser/4321/')
         self.assertEqual(response.status_code, 404)
 
     def test_get_matches(self):
         '''Test getting the matches for a valid user in the database'''
-        response = self.client.get('/server/api/getmatches/sally')
+        self.create_basic_user('bob_email', 'bob_pass')
+        self.create_basic_user('sally_email', 'sally_pass')
+        response = self.client.get('/server/api/getmatches/bob_email/')
         jsonresponse = json.loads(response.content)
-        # sally should match with kevin
-        self.assertEqual(jsonresponse[0]['email'], 'kevin')
+        # bob should match with sally
+        self.assertEqual(jsonresponse['userlist'][0]['email'], 'sally_email')
 
     def test_get_matches_without_parameter(self):
         '''Test getting the matches for a valid user in the database'''
@@ -70,5 +73,44 @@ class WebsiteTests(TestCase):
 
     def test_get_matches_with_invalid_user(self):
         '''Test getting user matches for an invalid user'''
-        response = self.client.get('/server/api/getmatches/4321')
+        response = self.client.get('/server/api/getmatches/4321/')
         self.assertEqual(response.status_code, 404)
+
+    def create_basic_user(self, email, password):
+        self.client.post('/server/api/registeruser/',
+                         {'email': email, 'password': password})
+        self.client.post('/server/api/updateuserinfo',
+                         {'email': email, 'handle': 'the best',
+                          'description': 'likes studying', 'rng': 100,
+                          'lat': 0, 'lng': 0,
+                          'gender': 'Male',
+                          'pet': 'True',
+                          'smoke': 'True',
+                          'sleep_late': 'True',
+                          'rise_early': 'True',
+                          'neat': 'True',
+                          'friends': 'True',
+                          'music': 'True',
+                          'language': 'english',
+                          'budget': 500,
+                          'dishes': 'True',
+                          'skimpy': 'True',
+                          'drink': 'True',
+                          'drugs': 'True',
+                          'shower': 'True',
+                          'tv': 'True',
+                          'gender_pref': 'True',
+                          'pet_pref': 'True',
+                          'smoke_pref': 'True',
+                          'sleep_late_pref': 'True',
+                          'rise_early_pref': 'True',
+                          'neat_pref': 'True',
+                          'friends_pref': 'True',
+                          'music_pref': 'True',
+                          'language_pref': 'True',
+                          'dishes_pref': 'True',
+                          'skimpy_pref': 'True',
+                          'drink_pref': 'True',
+                          'drug_pref': 'True',
+                          'shower_pref': 'True',
+                          'tv_pref': 'True'})
