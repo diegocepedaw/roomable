@@ -1,0 +1,48 @@
+====Installation of Roomable====
+
+===SETUP===
+
+==Linux==
+
+install [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
+install yarn (using package manager of choice e.g. pip)
+
+mkvirtualenv roomable
+bash
+cd backend
+workon roomable
+pip install -r requirements.txt -r requirements-dev.txt
+./install_hooks.sh
+
+bash
+cd frontend
+yarn install
+
+==Windows==
+
+install [virtualenvwrapper-win](https://pypi.python.org/pypi/virtualenvwrapper-win)
+install yarn (using package manager of choice e.g. pip)
+
+batch
+cd backend
+workon roomable
+pip install -r requirements.txt -r requirements-dev.txt
+install_hooks.bat
+
+batch
+cd frontend
+yarn install
+
+===RUNNING===
+
+In your terminal window run
+
+bash
+python manage.py runserver
+
+then in another separate terminal window run
+
+bash
+yarn start
+
+localhost:3000 should open and display the website
